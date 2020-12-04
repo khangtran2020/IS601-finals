@@ -18,7 +18,7 @@ mysql.init_app(app)
 message = ''
 
 @app.route('/', methods=['GET'])
-def index(ms=message):
+def index():
     return render_template('homepage.html')
 
 @app.route('/login', methods=['GET','POST'])
@@ -38,7 +38,7 @@ def login():
             session['username'] = account['username']
             # Redirect to home page
             message = 'Logged in successfully!'
-            return render_template('layout.html', msg=message)
+            # return render_template('layout.html', msg=message)
         else:
             # Account doesnt exist or username/password incorrect
             message = 'Incorrect username/password!'
