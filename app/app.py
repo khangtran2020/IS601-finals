@@ -17,17 +17,19 @@ app.config['MYSQL_DATABASE_DB'] = 'userData'
 mysql.init_app(app)
 message = ''
 
+
 @app.route('/', methods=['GET'])
 def index():
     return render_template('homepage.html')
 
-@app.route('/login', methods=['GET','POST'])
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    message=''
+    message = ''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         # Create variables for easy access
         username = request.form['username']
-        password = hashlib.md5(request.form['password'].encode(encoding='UTF-8',errors='strict')).hexdigest()
+        password = hashlib.md5(request.form['password'].encode(encoding='UTF-8', errors='strict')).hexdigest()
         cursor = mysql.get_db().cursor()
         cursor.execute('SELECT * FROM userTable WHERE username = %s AND password = %s', (username, password,))
         # Fetch one record and return result
@@ -38,16 +40,20 @@ def login():
             session['username'] = account['username']
             # Redirect to home page
             message = 'Logged in successfully!'
-            return render_template('profile.html')
+
+            return render_template('profile.html', firstname=account['firstname'], lastname=account['lastname'],
+                                   school=account['department'], year=account['year'])
         else:
             # Account doesnt exist or username/password incorrect
             message = 'Incorrect username/password!'
     return render_template('login.html', msg=message)
 
 
-@app.route('/cities/new', methods=['GET'])
-def form_insert_get():
-    return render_template('new.html', title='New Oscar AwardForm')
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.pop('username', None)
+    session.pop('id', None)
+    return redirect('/', code=302)
 
 
 if __name__ == '__main__':
