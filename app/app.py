@@ -38,11 +38,17 @@ def login():
             session['username'] = account['username']
             # Redirect to home page
             message = 'Logged in successfully!'
-            # return render_template('layout.html', msg=message)
+            return render_template('profile.html')
         else:
             # Account doesnt exist or username/password incorrect
             message = 'Incorrect username/password!'
     return render_template('login.html', msg=message)
+
+
+@app.route('/cities/new', methods=['GET'])
+def form_insert_get():
+    return render_template('new.html', title='New Oscar AwardForm')
+
 
 if __name__ == '__main__':
     app.secret_key = 'super secret key'
