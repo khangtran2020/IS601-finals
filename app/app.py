@@ -17,17 +17,19 @@ app.config['MYSQL_DATABASE_DB'] = 'userData'
 mysql.init_app(app)
 message = ''
 
+
 @app.route('/', methods=['GET'])
 def index():
     return render_template('homepage.html')
 
-@app.route('/login', methods=['GET','POST'])
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    message=''
+    message = ''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         # Create variables for easy access
         username = request.form['username']
-        password = hashlib.md5(request.form['password'].encode(encoding='UTF-8',errors='strict')).hexdigest()
+        password = hashlib.md5(request.form['password'].encode(encoding='UTF-8', errors='strict')).hexdigest()
         cursor = mysql.get_db().cursor()
         cursor.execute('SELECT * FROM userTable WHERE username = %s AND password = %s', (username, password,))
         # Fetch one record and return result
