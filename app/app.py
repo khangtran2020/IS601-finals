@@ -9,11 +9,11 @@ import hashlib
 app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
 
-app.config['MYSQL_DATABASE_HOST'] = 'db'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+app.config['MYSQL_DATABASE_HOST'] = 'us-cdbr-east-02.cleardb.com'
+app.config['MYSQL_DATABASE_USER'] = 'b8245d5e04777e'
+app.config['MYSQL_DATABASE_PASSWORD'] = '1027a2d6'
 app.config['MYSQL_DATABASE_PORT'] = 3306
-app.config['MYSQL_DATABASE_DB'] = 'userData'
+app.config['MYSQL_DATABASE_DB'] = 'heroku_a6d0e70501b6383'
 mysql.init_app(app)
 message = ''
 
@@ -36,22 +36,26 @@ def login():
         account = cursor.fetchone()
         if account:
             # Create session data, we can access this data in other routes
-            session['id'] = account['id']
-            session['username'] = account['username']
+            # session['id'] = account['id']
+            # session['username'] = account['username']
             # Redirect to home page
             message = 'Logged in successfully!'
-            return render_template('profile.html')
+
+            return render_template('profile.html', firstname=account['firstname'], lastname=account['lastname'],
+                                   school=account['department'], year=account['year'])
         else:
             # Account doesnt exist or username/password incorrect
             message = 'Incorrect username/password!'
     return render_template('login.html', msg=message)
 
 
-@app.route('/cities/new', methods=['GET'])
-def form_insert_get():
-    return render_template('new.html', title='New Oscar AwardForm')
+@app.route('/logout', methods=['GET'])
+def logout():
+    # session.pop('username', None)
+    # session.pop('id', None)
+    return redirect('/', code=302)
 
 
 if __name__ == '__main__':
     app.secret_key = 'super secret key'
-    app.run(host='0.0.0.0', debug=True)
+    app.run()
