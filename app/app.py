@@ -12,19 +12,19 @@ import hashlib
 app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
 
-# app.config['MYSQL_DATABASE_HOST'] = 'us-cdbr-east-02.cleardb.com'
-# app.config['MYSQL_DATABASE_USER'] = 'b8245d5e04777e'
-# app.config['MYSQL_DATABASE_PASSWORD'] = '1027a2d6'
-# app.config['MYSQL_DATABASE_PORT'] = 3306
-# app.config['MYSQL_DATABASE_DB'] = 'heroku_a6d0e70501b6383'
-
-app.config['MYSQL_DATABASE_HOST'] = 'db'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+app.config['MYSQL_DATABASE_HOST'] = 'us-cdbr-east-02.cleardb.com'
+app.config['MYSQL_DATABASE_USER'] = 'b90ece5bbd6812'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'f5dbc703'
 app.config['MYSQL_DATABASE_PORT'] = 3306
-app.config['MYSQL_DATABASE_DB'] = 'userData'
-mysql.init_app(app)
-message = ''
+app.config['MYSQL_DATABASE_DB'] = 'heroku_d57e0c92f5d3a70'
+
+# app.config['MYSQL_DATABASE_HOST'] = 'db'
+# app.config['MYSQL_DATABASE_USER'] = 'root'
+# app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+# app.config['MYSQL_DATABASE_PORT'] = 3306
+# app.config['MYSQL_DATABASE_DB'] = 'userData'
+# mysql.init_app(app)
+# message = ''
 
 
 @app.route('/', methods=['GET'])
