@@ -5,6 +5,8 @@ from flask import render_template
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
 import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import hashlib
 
 app = Flask(__name__)
@@ -99,19 +101,33 @@ def register_post():
                  request.form.get('department'), request.form.get('year'), False)
     sql_insert_query = """INSERT INTO userTable (username,password,firstname,lastname,school,department,`year`,isactivate) VALUES (%s, %s,%s, %s,%s, %s,%s,%s) """
     cursor.execute(sql_insert_query, inputData)
+
     mysql.get_db().commit()
+    username = request.form['username']
+    password = hashlib.md5(request.form['password'].encode(encoding='UTF-8', errors='strict')).hexdigest()
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT * FROM userTable WHERE username = %s AND password = %s', (username, password,))
+    account = cursor.fetchall()
+    user = account[0]
+    user_id = int(user['id'])
+
     smtp_server = "smtp.gmail.com"
     port = 587  # For starttls
     sender_email = "is601final@gmail.com"
     receiver_email = request.form.get('username')
     mail_password = 'xudryc-waNfy9-zopfyv'
-    main_url = 'https://schoolhub2020.herokuapp.com/'
+    main_url = 'https://schoolhub2020.herokuapp.com/activate/{}'.format(user_id)
 
+    message = MIMEMultipart("alternative")
+    message["Subject"] = "Activating Account for School Hub"
+    message["From"] = sender_email
+    message["To"] = receiver_email
     content = """\
     Subject: Activate Account to School Hub
 
-    Please click this link to activate: """ + str
-
+    Please click this link to activate: """ + main_url
+    part1 = MIMEText(content, "plain")
+    message.attach(part1)
     context = ssl.create_default_context()
     # Try to log in to server and send email
     try:
@@ -120,18 +136,13 @@ def register_post():
         server.starttls(context=context)  # Secure the connection
         server.ehlo()  # Can be omitted
         server.login(sender_email, mail_password)
-        # TODO: Send email here
+        server.sendmail(sender_email, receiver_email, message.as_string())
     except Exception as e:
         # Print any error messages to stdout
         print(e)
     finally:
         server.quit()
-
-    return render_template('profile.html', firstname=request.form.get('firstname'),
-                           lastname=request.form.get('lastname'),
-                           school=request.form.get('school'), department=request.form.get('department'),
-                           year=request.form.get('year'),
-                           activate=request.form.get('isactivate'))
+    return redirect('/profile/{}'.format(user_id))
 
 
 if __name__ == '__main__':
