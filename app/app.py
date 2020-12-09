@@ -24,6 +24,8 @@ app.config['MYSQL_DATABASE_DB'] = 'heroku_d57e0c92f5d3a70'
 # app.config['MYSQL_DATABASE_PORT'] = 3306
 # app.config['MYSQL_DATABASE_DB'] = 'userData'
 mysql.init_app(app)
+
+
 # message = ''
 
 
@@ -56,6 +58,7 @@ def login():
             # Account doesnt exist or username/password incorrect
             message = 'Incorrect username/password!'
     return render_template('login.html', msg=message)
+
 
 @app.route('/profile/<int:user_id>', methods=['GET'])
 def profile(user_id):
@@ -144,10 +147,21 @@ def register_post():
         server.quit()
     return redirect('/profile/{}'.format(user_id))
 
+
 @app.route('/activate/<int:user_id>', methods=['POST'])
 def activate(user_id):
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM userTable WHERE id = %s', (user_id))
+    result = cursor.fetchall()
+    user = result[0]
+    inputData = (user['username'], user['password'], user['firstname'],
+                 user['lastname'], user['school'], user['department'], user['year'], True, user_id)
+    sql_update_query = """UPDATE userTable t SET t.username = %s, t.password = %s, t.firstname = %s, t.lastname = 
+        %s, t.school = %s, t.department = %s, t.year = %s, t.isactivate=%s WHERE t.id = %s """
+    cursor.execute(sql_update_query, inputData)
+    mysql.get_db().commit()
+    return redirect('/profile/{}'.format(user_id))
+
 
 if __name__ == '__main__':
     app.secret_key = 'super secret key'
