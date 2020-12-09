@@ -40,19 +40,30 @@ def login():
         cursor = mysql.get_db().cursor()
         cursor.execute('SELECT * FROM userTable WHERE username = %s AND password = %s', (username, password,))
         # Fetch one record and return result
-        account = cursor.fetchone()
+        account = cursor.fetchall()
         if account:
             # Create session data, we can access this data in other routes
-            session['id'] = account['id']
-            session['username'] = account['username']
+            # session['id'] = account['id']
+            # session['username'] = account['username']
             message = 'Logged in successfully!'
-            return render_template('profile.html', firstname=account['firstname'], lastname=account['lastname'],
-                                   school=account['school'], department=account['department'], year=account['year'],
-                                   activate=account['isactivate'])
+            # print(account['id'])
+            user = account[0]
+            user_id = int(user['id'])
+            return redirect('/profile/{}'.format(user_id))
         else:
             # Account doesnt exist or username/password incorrect
             message = 'Incorrect username/password!'
     return render_template('login.html', msg=message)
+
+@app.route('/profile/<int:user_id>', methods=['GET'])
+def profile(user_id):
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT * FROM userTable WHERE id = %s', (user_id))
+    # Fetch one record and return result
+    account = cursor.fetchone()
+    return render_template('profile.html', firstname=account['firstname'], lastname=account['lastname'],
+                           school=account['school'], department=account['department'], year=account['year'],
+                           activate=account['isactivate'], id=account['id'])
 
 
 @app.route('/logout', methods=['GET'])
@@ -94,6 +105,7 @@ def register_post():
     sender_email = "is601final@gmail.com"
     receiver_email = request.form.get('username')
     mail_password = 'xudryc-waNfy9-zopfyv'
+    main_url = 'https://schoolhub2020.herokuapp.com/'
 
     content = """\
     Subject: Activate Account to School Hub
@@ -122,6 +134,6 @@ def register_post():
                            activate=request.form.get('isactivate'))
 
 
-# if __name__ == '__main__':
-#     app.secret_key = 'super secret key'
-#     app.run(host='0.0.0.0')
+if __name__ == '__main__':
+    app.secret_key = 'super secret key'
+    app.run(host='0.0.0.0')
