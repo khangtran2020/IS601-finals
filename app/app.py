@@ -70,8 +70,8 @@ def profile(user_id):
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    session.pop('username', None)
-    session.pop('id', None)
+    # session.pop('username', None)
+    # session.pop('id', None)
     return redirect('/', code=302)
 
 
@@ -144,6 +144,10 @@ def register_post():
         server.quit()
     return redirect('/profile/{}'.format(user_id))
 
+@app.route('/activate/<int:user_id>', methods=['POST'])
+def activate(user_id):
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT * FROM userTable WHERE id = %s', (user_id))
 
 if __name__ == '__main__':
     app.secret_key = 'super secret key'
