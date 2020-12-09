@@ -148,7 +148,7 @@ def register_post():
     return redirect('/profile/{}'.format(user_id))
 
 
-@app.route('/activate/<int:user_id>', methods=['POST'])
+@app.route('/activate/<int:user_id>', methods=['GET'])
 def activate(user_id):
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM userTable WHERE id = %s', (user_id))
