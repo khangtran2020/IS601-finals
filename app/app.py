@@ -23,7 +23,7 @@ app.config['MYSQL_DATABASE_DB'] = 'heroku_d57e0c92f5d3a70'
 # app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
 # app.config['MYSQL_DATABASE_PORT'] = 3306
 # app.config['MYSQL_DATABASE_DB'] = 'userData'
-# mysql.init_app(app)
+mysql.init_app(app)
 # message = ''
 
 
