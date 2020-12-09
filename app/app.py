@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask import render_template
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
+import smtplib, ssl
 import hashlib
 
 app = Flask(__name__)
@@ -88,6 +89,32 @@ def register_post():
     sql_insert_query = """INSERT INTO userTable (username,password,firstname,lastname,school,department,`year`,isactivate) VALUES (%s, %s,%s, %s,%s, %s,%s,%s) """
     cursor.execute(sql_insert_query, inputData)
     mysql.get_db().commit()
+    smtp_server = "smtp.gmail.com"
+    port = 587  # For starttls
+    sender_email = "is601final@gmail.com"
+    receiver_email = request.form.get('username')
+    mail_password = 'xudryc-waNfy9-zopfyv'
+
+    content = """\
+    Subject: Activate Account to School Hub
+
+    Please click this link to activate: """ + str
+
+    context = ssl.create_default_context()
+    # Try to log in to server and send email
+    try:
+        server = smtplib.SMTP(smtp_server, port)
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)  # Secure the connection
+        server.ehlo()  # Can be omitted
+        server.login(sender_email, mail_password)
+        # TODO: Send email here
+    except Exception as e:
+        # Print any error messages to stdout
+        print(e)
+    finally:
+        server.quit()
+
     return render_template('profile.html', firstname=request.form.get('firstname'),
                            lastname=request.form.get('lastname'),
                            school=request.form.get('school'), department=request.form.get('department'),
