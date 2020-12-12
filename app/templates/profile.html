@@ -107,7 +107,6 @@
             text-align: left;
             margin-top: 10px;
         }
-
         .back a {
             color: #444444;
             font-size: 13px;
@@ -130,6 +129,8 @@
         </div>
     </div>
 </nav>
+<div style="text-align:center"><img src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80" width="600" height="400" hspace="5" vspace="5"></div>
+
 <div class="container">
     {% if activate %}
     <h1>Student's information</h1>
@@ -139,7 +140,9 @@
     <p>Department: {{department}}</p>
     <p>Year: {{year}}</p>
     {% else %}
+
     <h1>User is not activated, please check your email to activate the account</h1>
+
     {% endif %}
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
@@ -147,6 +150,7 @@
                 <img class="mb-2" src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" alt="" width="24" height="24">
                 <small class="d-block mb-3 text-muted">&copy; 2020</small>
             </div>
+
             <div class="col-6 col-md">
                 <h5>Khang Tran</h5>
                 <ul class="list-unstyled text-small">
