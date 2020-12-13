@@ -3,9 +3,9 @@
 ## Authors
 1) Khang Tran
 2) Sahaj Vaidya 
+Link to Application : https://schoolhub2020.herokuapp.com/
 
-##Link to Application : https://schoolhub2020.herokuapp.com/
-##Screenshots from the application:
+## Screenshots from the application:
 1) Home Page:
 ![](./images/ss1.jpg)
 
