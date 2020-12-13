@@ -4,8 +4,16 @@
 1) Khang Tran
 2) Sahaj Vaidya 
 
-Link to Application : https://schoolhub2020.herokuapp.com/
+##Link to Application : https://schoolhub2020.herokuapp.com/
+##Screenshots from the application:
+1) Home Page:
+![](./images/ss1.jpg)
 
+2) Login Page
+![](./images/ss2.jpg)
+
+3) Profile Page
+![](./images/ss3.jpg)
 ## Feature description of the application:
 
 Registration - Using the sign up form, any new user can enter the required details
