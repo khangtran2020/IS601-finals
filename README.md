@@ -4,7 +4,7 @@
 1) Khang Tran
 2) Sahaj Vaidya  
 Link to Application : https://schoolhub2020.herokuapp.com/  
-In this final project, our team chose to  create a login and registration process that includes email verification. We named our system "School Hub" - as a login/registration of a school.
+In this final project, our team chose to  create a login and registration process that includes email verification. We named our system "School Hub" - as a login/registration of a school. We host our project on Heroku.
 
 ## Screenshots from the application:
 1) Home Page:
