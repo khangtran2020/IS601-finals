@@ -2,8 +2,9 @@
 
 ## Authors
 1) Khang Tran
-2) Sahaj Vaidya 
-Link to Application : https://schoolhub2020.herokuapp.com/
+2) Sahaj Vaidya  
+Link to Application : https://schoolhub2020.herokuapp.com/  
+In this final project, our team chose to  create a login and registration process that includes email verification. We named our system "School Hub" - as a login/registration of a school.
 
 ## Screenshots from the application:
 1) Home Page:
@@ -20,11 +21,10 @@ Registration - Using the sign up form, any new user can enter the required detai
 and register themselves into the application. Before a new user is activated,
 a verification email is sent to the new user to check and verify their identity.
 
-Login - The Login page prompts the user to enter the credentials thereby authenticating 
- the user before signing them into the system.
+Login - The Login page prompts the user to enter the credentials thereby authenticating the user before signing them into the system.
  
 Student Profile - This page displays the details of users including their name, school,
-program and year of joining the school.
+program and year of joining the school. If the user's account is not activated, our product won't 
 
 ## Task Allocation:
 
